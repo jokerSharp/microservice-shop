@@ -1,12 +1,11 @@
-package com.shop.manager.service;
+package com.shop.manager.client;
 
 import com.shop.manager.entity.Product;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
-public interface ProductService {
+public interface ProductsRestClient {
 
     List<Product> findAllProducts();
 
@@ -14,8 +13,7 @@ public interface ProductService {
 
     Optional<Product> findProduct(int productId);
 
-    void updateProduct(Integer id, String title, String details);
+    void updateProduct(int productId, String title, String details);
 
-    void deleteProduct(Integer id);
-
+    void deleteProduct(int productId);
 }
