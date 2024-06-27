@@ -1,9 +1,9 @@
 package com.shop.manager.controller;
 
+import com.shop.manager.client.BadRequestException;
+import com.shop.manager.client.ProductsRestClient;
 import com.shop.manager.controller.payload.NewProductPayload;
 import com.shop.manager.entity.Product;
-import com.shop.manager.service.ProductService;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,11 +18,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequiredArgsConstructor
 public class ProductsController {
 
-    private final ProductService productService;
+    private final ProductsRestClient productsRestClient;
 
     @GetMapping("list")
     public String getProductsList(Model model) {
-        model.addAttribute("products", this.productService.findAllProducts());
+        model.addAttribute("products", this.productsRestClient.findAllProducts());
         return "catalogue/products/list";
     }
 
@@ -32,18 +32,17 @@ public class ProductsController {
     }
 
     @PostMapping("create")
-    public String createProduct(@Valid NewProductPayload payload,
+    public String createProduct(NewProductPayload payload,
                                 BindingResult bindingResult,
                                 Model model) {
-        if (bindingResult.hasErrors()) {
+        try {
+            Product product = this.productsRestClient.createProduct(payload.title(), payload.details());
+            return "redirect:/catalogue/products/%d".formatted(product.id());
+        } catch (BadRequestException exception) {
             model.addAttribute("payload", payload);
-            model.addAttribute("errors", bindingResult.getAllErrors().stream()
-                    .map(ObjectError::getDefaultMessage)
-                    .toList());
+            model.addAttribute("errors", exception.getErrors());
             return "catalogue/products/new_product";
-        } else {
-            Product product = this.productService.createProduct(payload.title(), payload.details());
-            return "redirect:/catalogue/products/%d".formatted(product.getId());
         }
+
     }
 }

@@ -1,10 +1,9 @@
-package com.shop.manager.repository;
+package com.shop.catalogue.repository;
 
-import com.shop.manager.entity.Product;
+import com.shop.catalogue.entity.Product;
 import org.springframework.stereotype.Repository;
 
 import java.util.*;
-import java.util.stream.IntStream;
 
 @Repository
 public class InMemoryProductRepositoryImpl implements ProductRepository {
