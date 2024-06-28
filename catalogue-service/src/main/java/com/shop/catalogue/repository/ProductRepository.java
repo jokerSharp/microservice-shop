@@ -1,17 +1,15 @@
 package com.shop.catalogue.repository;
 
 import com.shop.catalogue.entity.Product;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
-import java.util.List;
-import java.util.Optional;
+@Repository
+public interface ProductRepository extends CrudRepository<Product, Integer> {
 
-public interface ProductRepository {
+    Iterable<Product> findAllByTitleLikeIgnoreCase(String filter);
 
-    List<Product> findAll();
-
-    Product save(Product product);
-
-    Optional<Product> findById(Integer productId);
-
-    void deleteById(Integer id);
+    @Query(name = "Product.findAllByTitleAndDetailsLikeIgnoreCase")
+    Iterable<Product> findAllByTitleAndDetailsLikeIgnoreCase(String title, String details);
 }

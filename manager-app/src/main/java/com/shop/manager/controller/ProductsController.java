@@ -8,10 +8,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("catalogue/products")
@@ -21,8 +21,12 @@ public class ProductsController {
     private final ProductsRestClient productsRestClient;
 
     @GetMapping("list")
-    public String getProductsList(Model model) {
-        model.addAttribute("products", this.productsRestClient.findAllProducts());
+    public String getProductsList(Model model,
+                                  @RequestParam(name = "title", required = false) String title,
+                                  @RequestParam(name = "details", required = false) String details) {
+        model.addAttribute("products", this.productsRestClient.findAllProducts(title, details));
+        model.addAttribute("title", title);
+        model.addAttribute("details", details);
         return "catalogue/products/list";
     }
 
@@ -43,6 +47,5 @@ public class ProductsController {
             model.addAttribute("errors", exception.getErrors());
             return "catalogue/products/new_product";
         }
-
     }
 }
