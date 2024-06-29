@@ -1,4 +1,12 @@
+spring:
+  datasource:
+    driverClassName: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:54322/manager
+    username: manager
+    password: manager
 webshop:
   services:
     catalogue:
       uri: http://localhost:8181
+      username: catalogue
+      password: password
