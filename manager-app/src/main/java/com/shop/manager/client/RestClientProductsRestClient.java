@@ -50,13 +50,11 @@ public class RestClientProductsRestClient implements ProductsRestClient {
     @Override
     public Optional<Product> findProduct(int productId) {
         try {
-            return Optional.ofNullable(
-                    this.restClient
+            return Optional.ofNullable(this.restClient
                             .get()
                             .uri("catalogue-api/products/{productId}", productId)
                             .retrieve()
-                            .body(Product.class)
-            );
+                            .body(Product.class));
         } catch (HttpClientErrorException.NotFound exception) {
             return Optional.empty();
         }
