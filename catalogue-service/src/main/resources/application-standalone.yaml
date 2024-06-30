@@ -1,10 +1,9 @@
 spring:
   security:
-    user:
-      name: catalogue
-      password: password
-      roles:
-        - ADMIN
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8082/realms/webshop
   datasource:
     driverClassName: org.postgresql.Driver
     url: jdbc:postgresql://localhost:54321/catalogue

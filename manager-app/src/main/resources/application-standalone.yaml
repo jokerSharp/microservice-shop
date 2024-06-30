@@ -1,12 +1,23 @@
 spring:
-  datasource:
-    driverClassName: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:54322/manager
-    username: manager
-    password: manager
+  security:
+    oauth2:
+      client:
+        provider:
+          keycloak:
+            issuer-uri: http://localhost:8082/realms/webshop
+            user-name-attribute: preferred_username
+        registration:
+          manager-app:
+            client-id: manager-app
+            client-secret: kKcwseXqBXKHpQC0dSPAeYSnnBRllPNQ
+            provider: keycloak
+            scope:
+              - openid
+              - view_catalogue
+              - edit_catalogue
+              - microprofile-jwt
 webshop:
   services:
     catalogue:
       uri: http://localhost:8181
-      username: catalogue
-      password: password
+      registration-id: manager-app
