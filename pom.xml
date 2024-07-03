@@ -23,6 +23,7 @@
 	</developers>
 	<modules>
 		<module>manager-app</module>
+		<module>customer-app</module>
 		<module>catalogue-service</module>
 	</modules>
 
