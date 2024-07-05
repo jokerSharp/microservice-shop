@@ -1,6 +1,6 @@
-package com.shop.customer.repository;
+package com.shop.feedback.repository;
 
-import com.shop.customer.entity.FavouriteProduct;
+import com.shop.feedback.entity.FavouriteProduct;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
