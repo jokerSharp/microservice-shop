@@ -1,7 +1,7 @@
-package com.shop.customer.service;
+package com.shop.feedback.service;
 
-import com.shop.customer.entity.FavouriteProduct;
-import com.shop.customer.repository.FavouriteProductsRepository;
+import com.shop.feedback.entity.FavouriteProduct;
+import com.shop.feedback.repository.FavouriteProductsRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;

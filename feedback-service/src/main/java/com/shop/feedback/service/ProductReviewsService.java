@@ -1,6 +1,6 @@
-package com.shop.customer.service;
+package com.shop.feedback.service;
 
-import com.shop.customer.entity.ProductReview;
+import com.shop.feedback.entity.ProductReview;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
