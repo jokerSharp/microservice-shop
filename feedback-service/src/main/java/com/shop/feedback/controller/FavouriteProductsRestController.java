@@ -39,4 +39,10 @@ public class FavouriteProductsRestController {
                                 .build(favouriteProduct.getId()))
                         .body(favouriteProduct));
     }
+
+    @DeleteMapping
+    public Mono<ResponseEntity<Void>> removeProductFromFavourites(@PathVariable int productId) {
+        return this.favouriteProductsService.removeProductFromFavourites(productId)
+                .then(Mono.just(ResponseEntity.noContent().build()));
+    }
 }
