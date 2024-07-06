@@ -1,8 +1,8 @@
 package com.shop.customer.controller;
 
+import com.shop.customer.client.FavouriteProductsClient;
 import com.shop.customer.client.ProductsClient;
 import com.shop.customer.entity.FavouriteProduct;
-import com.shop.customer.service.FavouriteProductsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,7 +18,7 @@ public class ProductsController {
 
     private final ProductsClient productsClient;
 
-    private final FavouriteProductsService favouriteProductsService;
+    private final FavouriteProductsClient favouriteProductsClient;
 
     @GetMapping("list")
     public Mono<String> getProductsListPage(Model model,
@@ -37,8 +37,8 @@ public class ProductsController {
                                                  @RequestParam(name = "details", required = false) String details) {
         model.addAttribute("title", title);
         model.addAttribute("details", details);
-        return this.favouriteProductsService.findFavouriteProducts()
-                .map(FavouriteProduct::getProductId)
+        return this.favouriteProductsClient.findFavouriteProducts()
+                .map(FavouriteProduct::productId)
                 .collectList()
                 .flatMap(favouriteProducts -> this.productsClient.findAllProducts(title, details)
                         .filter(product -> favouriteProducts.contains(product.id()))

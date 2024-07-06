@@ -1,4 +1,8 @@
 package com.shop.feedback.controller.payload;
 
-public record NewFavouriteProductPayload(Integer productId) {
+import jakarta.validation.constraints.NotNull;
+
+public record NewFavouriteProductPayload(
+        @NotNull(message = "{feedback.product.favourites.create.errors.product_id_is_null}")
+        Integer productId) {
 }
