@@ -22,7 +22,7 @@ public class DefaultFavouriteProductsService implements FavouriteProductsService
 
     @Override
     public Mono<Void> removeProductFromFavourites(int productId) {
-        return this.favouriteProductRepository.deletebyproductid(productId);
+        return this.favouriteProductRepository.deleteByProductId(productId);
     }
 
     @Override
