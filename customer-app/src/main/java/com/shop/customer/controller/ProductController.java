@@ -42,14 +42,13 @@ public class ProductController {
     @GetMapping
     public Mono<String> getProductPage(@ModelAttribute("product") Mono<Product> productMono, Model model) {
         model.addAttribute("inFavourite", false);
-        return productMono.flatMap(
-                product -> this.productReviewsClient.findProductReviewsByProductId(product.id())
-                        .collectList()
-                        .doOnNext(productReviews -> model.addAttribute("reviews", productReviews))
-                        .then(this.favouriteProductsClient.findFavouriteProductByProductId(product.id())
-                                .doOnNext(favouriteProduct -> model.addAttribute("inFavourite", true)))
-                        .thenReturn("customer/products/product")
-        );
+        return productMono.flatMap(product -> this.productReviewsClient.findProductReviewsByProductId(product.id())
+                .collectList()
+                .doOnNext(productReviews -> log.info("collecting reviews: {}", productReviews))
+                .doOnNext(productReviews -> model.addAttribute("reviews", productReviews))
+                .then(this.favouriteProductsClient.findFavouriteProductByProductId(product.id())
+                        .doOnNext(favouriteProduct -> model.addAttribute("inFavourite", true)))
+                .thenReturn("customer/products/product"));
     }
 
     @PostMapping("add-to-favourites")
@@ -77,7 +76,6 @@ public class ProductController {
                                      NewProductReviewPayload payload,
                                      Model model,
                                      ServerHttpResponse response) {
-
         return productMono.flatMap(product ->
                 this.productReviewsClient.createProductReview(product.id(), payload.rating(), payload.review())
                         .thenReturn("redirect:/customer/products/%d".formatted(product.id()))
