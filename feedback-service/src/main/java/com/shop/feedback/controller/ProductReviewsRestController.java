@@ -5,6 +5,7 @@ import com.shop.feedback.entity.ProductReview;
 import com.shop.feedback.service.ProductReviewsService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.MessageSourceResolvable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -20,6 +21,7 @@ import reactor.core.publisher.Mono;
 @RestController
 @RequestMapping("feedback-api/product-reviews")
 @RequiredArgsConstructor
+@Slf4j
 public class ProductReviewsRestController {
 
     private final ProductReviewsService productReviewsService;
@@ -34,13 +36,19 @@ public class ProductReviewsRestController {
             Mono<JwtAuthenticationToken> authenticationTokenMono,
             @Valid @RequestBody Mono<NewProductReviewPayload> payloadMono,
             UriComponentsBuilder uriComponentsBuilder) {
-        return authenticationTokenMono.flatMap(token -> payloadMono
-                        .flatMap(payload -> this.productReviewsService.createProductReview(payload.productId(),
-                                payload.rating(), payload.review(), token.getToken().getSubject())))
-                .map(productReview -> ResponseEntity
-                        .created(uriComponentsBuilder.replacePath("/feedback-api/product-reviews/{id}")
-                                .build(productReview.getId()))
-                        .body(productReview));
+        return authenticationTokenMono
+                .flatMap(token ->
+                        payloadMono.doOnNext(payload -> log.info("Receiving request to create a product review: {}", payload))
+                                .flatMap(payload ->
+                                this.productReviewsService.createProductReview(payload.productId(),
+                                        payload.rating(), payload.review(), token.getToken().getSubject())))
+                .doOnNext(productReview -> log.info("Product review created: {}", productReview))
+                .map(productReview ->
+                        ResponseEntity
+                                .created(uriComponentsBuilder
+                                        .replacePath("/feedback-api/product-reviews/{id}")
+                                        .build(productReview.getId()))
+                                .body(productReview));
     }
 
     @ExceptionHandler(WebExchangeBindException.class)

@@ -53,7 +53,7 @@ public class WebClientFavouriteProductsClient implements FavouriteProductsClient
     public Mono<Void> removeProductFromFavourites(int productId) {
         return this.webClient
                 .delete()
-                .uri("feedback-api/favourite-products/by-product-id/{productId}", productId)
+                .uri("/feedback-api/favourite-products/by-product-id/{productId}", productId)
                 .retrieve()
                 .toBodilessEntity()
                 .then();

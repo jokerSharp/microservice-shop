@@ -47,11 +47,12 @@ public class FavouriteProductsRestController {
                         .body(favouriteProduct));
     }
 
-    @DeleteMapping
+    @DeleteMapping("by-product-id/{productId:\\d+}")
     public Mono<ResponseEntity<Void>> removeProductFromFavourites(Mono<JwtAuthenticationToken> authenticationTokenMono,
-                                                                  @PathVariable int productId) {
-        return authenticationTokenMono.flatMap(token -> this.favouriteProductsService
-                .removeProductFromFavourites(productId, token.getToken().getSubject())
-                .then(Mono.just(ResponseEntity.noContent().build())));
+                                                                  @PathVariable("productId") int productId) {
+        return authenticationTokenMono
+                .flatMap(token -> this.favouriteProductsService
+                        .removeProductFromFavourites(productId, token.getToken().getSubject()))
+                .then(Mono.just(ResponseEntity.noContent().build()));
     }
 }
