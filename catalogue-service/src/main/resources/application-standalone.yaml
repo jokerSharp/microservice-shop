@@ -1,4 +1,12 @@
 spring:
+  boot:
+    admin:
+      client:
+        enabled: true
+        instance:
+          name: catalogue-service
+          service-host-type: ip
+        url: http://localhost:8085
   security:
     oauth2:
       resourceserver:
@@ -21,6 +29,7 @@ server:
 logging:
   level:
     sql: info
+    org.springframework.security: TRACE
 springdoc:
   swagger-ui:
     oauth:
@@ -28,3 +37,13 @@ springdoc:
       use-pkce-with-authorization-code-grant: true
 keycloak:
   uri: http://localhost:8082
+management:
+  health:
+    livenessstate:
+      enabled: true
+    readinessstate:
+      enabled: true
+    endpoints:
+      web:
+        exposure:
+          include: '*'
