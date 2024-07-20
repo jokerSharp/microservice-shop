@@ -1,17 +1,30 @@
+server:
+  port: 8181
 spring:
   boot:
     admin:
       client:
-        enabled: true
+        url: http://localhost:8085
         instance:
           name: catalogue-service
           service-host-type: ip
-        url: http://localhost:8085
+        enabled: true
   security:
     oauth2:
       resourceserver:
         jwt:
           issuer-uri: http://localhost:8082/realms/webshop
+      client:
+        registration:
+          keycloak:
+            client-id: catalogue-service-metrics-client
+            client-secret: 3C2nXNPeIiLv7VpeCWStaj2ctcee7NNa
+            authorization-grant-type: client_credentials
+            scope:
+              - metrics_server
+        provider:
+          keycloak:
+            issuer-uri: http://localhost:8082/realms/webshop
   datasource:
     driverClassName: org.postgresql.Driver
     url: jdbc:postgresql://localhost:54321/catalogue
@@ -24,8 +37,6 @@ spring:
     schemas:
       - public
       - catalogue
-server:
-  port: 8181
 logging:
   level:
     sql: info
@@ -43,7 +54,7 @@ management:
       enabled: true
     readinessstate:
       enabled: true
-    endpoints:
-      web:
-        exposure:
-          include: '*'
+  endpoints:
+    web:
+      exposure:
+        include: '*'
