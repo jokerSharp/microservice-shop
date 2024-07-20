@@ -4,8 +4,37 @@ spring:
   data:
     mongodb:
       uri: mongodb://localhost:27017/feedback
+  boot:
+    admin:
+      client:
+        enabled: true
+        instance:
+          name: feedback-service
+          service-host-type: ip
+        url: http://localhost:8085
   security:
     oauth2:
       resourceserver:
         jwt:
           issuer-uri: http://localhost:8082/realms/webshop
+      client:
+        registration:
+          keycloak:
+            client-id: feedback-service-metrics-client
+            client-secret: jlj3mUxbKuGvSW2VSXe67NcguLmURTg3
+            authorization-grant-type: client_credentials
+            scope:
+              - metrics_server
+        provider:
+          keycloak:
+            issuer-uri: http://localhost:8082/realms/webshop
+management:
+  health:
+    livenessstate:
+      enabled: true
+    readinessstate:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: '*'

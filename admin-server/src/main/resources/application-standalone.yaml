@@ -3,6 +3,9 @@ server:
 spring:
   security:
     oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8082/realms/webshop
       client:
         provider:
           keycloak:
@@ -14,3 +17,17 @@ spring:
               - metrics
             client-id: admin-service
             client-secret: eeNZ5418ETcyGWJztTOlkvVYkBFShYYR
+          login:
+            provider: keycloak
+            scope:
+              - metrics
+              - openid
+            client-id: admin-service
+            client-secret: eeNZ5418ETcyGWJztTOlkvVYkBFShYYR
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+          - health
+          - prometheus
