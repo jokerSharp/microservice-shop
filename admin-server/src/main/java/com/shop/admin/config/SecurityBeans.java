@@ -32,12 +32,12 @@ public class SecurityBeans {
                 .securityMatchers(customizer -> customizer
                         .requestMatchers(HttpMethod.POST, "/instances")
                         .requestMatchers(HttpMethod.DELETE, "/instances/*")
-                        .requestMatchers("/actuator/**"))
+                        .requestMatchers("/actuator/**")
+                )
                 .oauth2ResourceServer(customizer -> customizer.jwt(Customizer.withDefaults()))
                 .authorizeHttpRequests(customizer -> customizer
                         .requestMatchers("/instances", "/instances/*").hasAuthority("SCOPE_metrics_server")
-                        .requestMatchers("/actuator/**")
-                        .hasAuthority("SCOPE_metrics")
+                        .requestMatchers("/actuator/**").permitAll()
                         .anyRequest().denyAll())
                 .sessionManagement(customizer -> customizer.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .csrf(CsrfConfigurer::disable)
