@@ -24,6 +24,8 @@ spring:
               - openid
             client-id: admin-service
             client-secret: eeNZ5418ETcyGWJztTOlkvVYkBFShYYR
+  application:
+    name: webshop-admin-server
 management:
   endpoints:
     web:

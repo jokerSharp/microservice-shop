@@ -37,10 +37,12 @@ spring:
     schemas:
       - public
       - catalogue
+  application:
+    name: webshop-catalogue-service
 logging:
   level:
     sql: info
-    org.springframework.security: TRACE
+    org.springframework.security: INFO
 springdoc:
   swagger-ui:
     oauth:
