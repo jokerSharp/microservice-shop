@@ -1,25 +1,65 @@
 scrape_configs:
   - job_name: webshop_admin_service
     static_configs:
-      - targets: ["http://192.168.0.105:8085"]
+      - targets: ["http://172.30.144.1:8085"]
     metrics_path: /actuator/prometheus
+    oauth2:
+      client_id: victoria-metrics
+      client_secret: 1E4Fm3AoP45N1hWx9HZ8XyoMdZZtI2ta
+      token_url: http://172.30.144.1:8082/realms/webshop/protocol/openid-connect/token
+      scopes:
+        - metrics
+      endpoint_params:
+        grant_type: client_credentials
 
   - job_name: webshop_catalogue_service
     static_configs:
-      - targets: ["http://192.168.0.105:8181"]
+      - targets: ["http://172.30.144.1:8181"]
     metrics_path: /actuator/prometheus
+#    oauth2:
+#      client_id: victoria-metrics
+#      client_secret: 1E4Fm3AoP45N1hWx9HZ8XyoMdZZtI2ta
+#      token_url: http://172.17.0.1:8082/realms/webshop/protocol/openid-connect/token
+#      scopes:
+#        - metrics
+#      endpoint_params:
+#        grant_type: client_credentials
 
   - job_name: webshop_customer_app
     static_configs:
-      - targets: [ "http://192.168.0.105:8083" ]
+      - targets: [ "http://172.30.144.1:8083" ]
     metrics_path: /actuator/prometheus
-
+#    oauth2:
+#      client_id: victoria-metrics
+#      client_secret: 1E4Fm3AoP45N1hWx9HZ8XyoMdZZtI2ta
+#      token_url: http://172.17.0.1:8082/realms/webshop/protocol/openid-connect/token
+#      scopes:
+#        - metrics
+#      endpoint_params:
+#        grant_type: client_credentials
+#
   - job_name: webshop_feedback_service
     static_configs:
-      - targets: [ "http://192.168.0.105:8182" ]
+      - targets: [ "http://172.30.144.1:8182" ]
     metrics_path: /actuator/prometheus
-
+#    oauth2:
+#      client_id: victoria-metrics
+#      client_secret: 1E4Fm3AoP45N1hWx9HZ8XyoMdZZtI2ta
+#      token_url: http://172.17.0.1:8082/realms/webshop/protocol/openid-connect/token
+#      scopes:
+#        - metrics
+#      endpoint_params:
+#        grant_type: client_credentials
+#
   - job_name: webshop_manager_app
     static_configs:
-      - targets: [ "http://192.168.0.105:8080" ]
+      - targets: [ "http://172.30.144.1:8080" ]
     metrics_path: /actuator/prometheus
+#    oauth2:
+#      client_id: victoria-metrics
+#      client_secret: 1E4Fm3AoP45N1hWx9HZ8XyoMdZZtI2ta
+#      token_url: http://172.17.0.1:8082/realms/webshop/protocol/openid-connect/token
+#      scopes:
+#        - metrics
+#      endpoint_params:
+#        grant_type: client_credentials

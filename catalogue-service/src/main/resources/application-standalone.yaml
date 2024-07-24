@@ -4,7 +4,7 @@ spring:
   boot:
     admin:
       client:
-        url: http://localhost:8085
+        url: http://172.30.144.1:8085
         instance:
           name: catalogue-service
           service-host-type: ip
@@ -13,7 +13,7 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: http://localhost:8082/realms/webshop
+          issuer-uri: http://172.30.144.1:8082/realms/webshop
       client:
         registration:
           keycloak:
@@ -24,7 +24,7 @@ spring:
               - metrics_server
         provider:
           keycloak:
-            issuer-uri: http://localhost:8082/realms/webshop
+            issuer-uri: http://172.30.144.1:8082/realms/webshop
   datasource:
     driverClassName: org.postgresql.Driver
     url: jdbc:postgresql://localhost:54321/catalogue
@@ -49,7 +49,7 @@ springdoc:
       client-id: catalogue-service-swagger-ui
       use-pkce-with-authorization-code-grant: true
 keycloak:
-  uri: http://localhost:8082
+  uri: http://172.30.144.1:8082
 management:
   health:
     livenessstate:

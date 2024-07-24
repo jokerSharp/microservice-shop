@@ -4,7 +4,7 @@ spring:
       client:
         provider:
           keycloak:
-            issuer-uri: http://localhost:8082/realms/webshop
+            issuer-uri: http://172.30.144.1:8082/realms/webshop
             user-name-attribute: preferred_username
         registration:
           manager-app:
@@ -25,12 +25,12 @@ spring:
               - metrics_server
       resourceserver:
         jwt:
-          issuer-uri: http://localhost:8082/realms/webshop
+          issuer-uri: http://172.30.144.1:8082/realms/webshop
   boot:
     admin:
       client:
         enabled: true
-        url: http://localhost:8085
+        url: http://172.30.144.1:8085
         instance:
           name: manager-app
           service-host-type: ip
@@ -39,7 +39,7 @@ spring:
 webshop:
   services:
     catalogue:
-      uri: http://localhost:8181
+      uri: http://172.30.144.1:8181
       registration-id: manager-app
 management:
   health:

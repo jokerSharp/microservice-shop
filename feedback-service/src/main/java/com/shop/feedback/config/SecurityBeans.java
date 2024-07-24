@@ -14,7 +14,9 @@ public class SecurityBeans {
     public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) {
         return  http
                 .authorizeExchange(configurer -> configurer
-                        .pathMatchers("/actuator/**").hasAuthority("SCOPE_metrics")
+                        .pathMatchers("/actuator/**")
+                        .permitAll()
+//                        .hasAuthority("SCOPE_metrics")
                         .anyExchange().authenticated())
                 .csrf(ServerHttpSecurity.CsrfSpec::disable)
                 .securityContextRepository(NoOpServerSecurityContextRepository.getInstance())
