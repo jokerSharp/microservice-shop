@@ -11,12 +11,12 @@ spring:
         instance:
           name: feedback-service
           service-host-type: ip
-        url: http://localhost:8085
+        url: http://172.30.144.1:8085
   security:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: http://localhost:8082/realms/webshop
+          issuer-uri: http://172.30.144.1:8082/realms/webshop
       client:
         registration:
           keycloak:
@@ -27,7 +27,7 @@ spring:
               - metrics_server
         provider:
           keycloak:
-            issuer-uri: http://localhost:8082/realms/webshop
+            issuer-uri: http://172.30.144.1:8082/realms/webshop
   application:
     name: webshop-feedback-service
 management:
