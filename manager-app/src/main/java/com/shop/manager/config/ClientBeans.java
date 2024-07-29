@@ -7,6 +7,8 @@ import de.codecentric.boot.admin.client.registration.RegistrationClient;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
+import org.springframework.cloud.client.loadbalancer.LoadBalancerInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpHeaders;
@@ -28,9 +30,11 @@ public class ClientBeans {
             @Value("${webshop.services.catalogue.uri:http://localhost:8181}") String catalogueBaseUri,
             ClientRegistrationRepository clientRegistrationRepository,
             OAuth2AuthorizedClientRepository authorizedClientRepository,
-            @Value("${webshop.services.catalogue.registration-id:keycloak}") String registrationId) {
+            @Value("${webshop.services.catalogue.registration-id:keycloak}") String registrationId,
+            LoadBalancerClient loadBalancerClient) {
         return new RestClientProductsRestClient(RestClient.builder()
                 .baseUrl(catalogueBaseUri)
+                .requestInterceptor(new LoadBalancerInterceptor(loadBalancerClient))
                 .requestInterceptor(
                         new OAuthClientHttpRequestClientInterceptor(
                                 new DefaultOAuth2AuthorizedClientManager(clientRegistrationRepository,
@@ -41,7 +45,7 @@ public class ClientBeans {
     }
 
     @Bean
-//    @ConditionalOnProperty(name = "spring.boot.admin.client.enabled", havingValue = "true")
+    @ConditionalOnProperty(name = "spring.boot.admin.client.enabled", havingValue = "true")
     public RegistrationClient registrationClient(ClientRegistrationRepository clientRegistrationRepository,
                                                  OAuth2AuthorizedClientService authorizedClientService) {
         AuthorizedClientServiceOAuth2AuthorizedClientManager authorizedClientManager =
