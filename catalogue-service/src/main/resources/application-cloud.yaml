@@ -1,0 +1,74 @@
+server:
+  port: 8181
+spring:
+  boot:
+    admin:
+      client:
+        url: http://172.30.144.1:8085
+        instance:
+          name: catalogue-service
+          service-host-type: ip
+        enabled: true
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://172.30.144.1:8082/realms/webshop
+      client:
+        registration:
+          keycloak:
+            client-id: catalogue-service-metrics-client
+            client-secret: 3C2nXNPeIiLv7VpeCWStaj2ctcee7NNa
+            authorization-grant-type: client_credentials
+            scope:
+              - metrics_server
+        provider:
+          keycloak:
+            issuer-uri: http://172.30.144.1:8082/realms/webshop
+  datasource:
+    driverClassName: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:54321/catalogue
+    username: catalogue
+    password: catalogue
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true
+  flyway:
+    schemas:
+      - public
+      - catalogue
+  application:
+    name: webshop-catalogue-service
+logging:
+  level:
+    sql: info
+    org.springframework.security: INFO
+springdoc:
+  swagger-ui:
+    oauth:
+      client-id: catalogue-service-swagger-ui
+      use-pkce-with-authorization-code-grant: true
+keycloak:
+  uri: http://172.30.144.1:8082
+management:
+  health:
+    livenessstate:
+      enabled: true
+    readinessstate:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  zipkin:
+    tracing:
+      endpoint: http://172.30.144.1:9411/api/v2/spans
+  tracing:
+    sampling:
+      probability: 1.0
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    prefer-ip-address: true

@@ -1,0 +1,65 @@
+spring:
+  security:
+    oauth2:
+      client:
+        provider:
+          keycloak:
+            issuer-uri: http://172.30.144.1:8082/realms/webshop
+            user-name-attribute: preferred_username
+        registration:
+          manager-app:
+            client-id: manager-app
+            client-secret: kKcwseXqBXKHpQC0dSPAeYSnnBRllPNQ
+            provider: keycloak
+            scope:
+              - openid
+              - view_catalogue
+              - edit_catalogue
+              - microprofile-jwt
+          metrics:
+            provider: keycloak
+            client-id: manager-app-metrics-client
+            client-secret: sQgXANOQLuCdpvEkMFp6oh0GNoSVVORg
+            authorization-grant-type: client_credentials
+            scope:
+              - metrics_server
+      resourceserver:
+        jwt:
+          issuer-uri: http://172.30.144.1:8082/realms/webshop
+  boot:
+    admin:
+      client:
+        enabled: true
+        url: http://172.30.144.1:8085
+        instance:
+          name: manager-app
+          service-host-type: ip
+  application:
+    name: webshop-manager-app
+webshop:
+  services:
+    catalogue:
+      uri: lb://webshop-catalogue-service
+      registration-id: manager-app
+management:
+  health:
+    livenessstate:
+      enabled: true
+    readinessstate:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  zipkin:
+    tracing:
+      endpoint: http://172.30.144.1:9411/api/v2/spans
+  tracing:
+    sampling:
+      probability: 1.0
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    prefer-ip-address: true

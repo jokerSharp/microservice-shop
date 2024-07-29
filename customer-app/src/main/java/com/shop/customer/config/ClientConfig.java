@@ -9,6 +9,8 @@ import de.codecentric.boot.admin.client.registration.RegistrationClient;
 import io.micrometer.observation.ObservationRegistry;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.cloud.client.loadbalancer.LoadBalanced;
+import org.springframework.cloud.client.loadbalancer.reactive.ReactorLoadBalancerExchangeFilterFunction;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
@@ -24,6 +26,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 public class ClientConfig {
 
     @Bean
+    @LoadBalanced
     @Scope("prototype")
     public WebClient.Builder webshopServicesWebClientBuilder(
             ReactiveClientRegistrationRepository clientRegistrationRepository,
