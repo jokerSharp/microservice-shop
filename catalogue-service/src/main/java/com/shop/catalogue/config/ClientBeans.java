@@ -19,10 +19,8 @@ public class ClientBeans {
 
     @Bean
     @ConditionalOnProperty(name = "spring.boot.admin.client.enabled", havingValue = "true")
-    public RegistrationClient registrationClient(
-            ClientRegistrationRepository clientRegistrationRepository,
-            OAuth2AuthorizedClientService authorizedClientService
-    ) {
+    public RegistrationClient registrationClient(ClientRegistrationRepository clientRegistrationRepository,
+                                                 OAuth2AuthorizedClientService authorizedClientService) {
         AuthorizedClientServiceOAuth2AuthorizedClientManager authorizedClientManager =
                 new AuthorizedClientServiceOAuth2AuthorizedClientManager(clientRegistrationRepository,
                         authorizedClientService);
