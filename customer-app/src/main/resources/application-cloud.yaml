@@ -28,6 +28,13 @@ spring:
             authorization-grant-type: client_credentials
             scope:
               - metrics_server
+          discovery:
+            provider: keycloak
+            client-id: customer-app-metrics-client
+            client-secret: 5o3DqIymzq98yiLNACEiN3UuWuYoQ7jH
+            authorization-grant-type: client_credentials
+            scope:
+              - discovery
       resourceserver:
         jwt:
           issuer-uri: http://172.30.144.1:8082/realms/webshop
