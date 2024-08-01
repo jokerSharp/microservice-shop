@@ -7,11 +7,7 @@ spring:
   boot:
     admin:
       client:
-        enabled: true
-        instance:
-          name: feedback-service
-          service-host-type: ip
-        url: http://172.30.144.1:8085
+        enabled: false
   security:
     oauth2:
       resourceserver:

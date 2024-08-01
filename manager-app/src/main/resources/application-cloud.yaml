@@ -36,11 +36,7 @@ spring:
   boot:
     admin:
       client:
-        enabled: true
-        url: http://172.30.144.1:8085
-        instance:
-          name: manager-app
-          service-host-type: ip
+        enabled: false
   application:
     name: webshop-manager-app
 webshop:

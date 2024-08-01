@@ -4,11 +4,7 @@ spring:
   boot:
     admin:
       client:
-        url: http://172.30.144.1:8085
-        instance:
-          name: catalogue-service
-          service-host-type: ip
-        enabled: true
+        enabled: false
   security:
     oauth2:
       resourceserver:
