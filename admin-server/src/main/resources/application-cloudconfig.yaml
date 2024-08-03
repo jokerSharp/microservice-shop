@@ -1,0 +1,10 @@
+server:
+  port: 8085
+spring:
+  application:
+    name: webshop-admin-server
+  config:
+    import: 'optional:configserver:'
+  cloud:
+    config:
+      uri: http://localhost:8888
