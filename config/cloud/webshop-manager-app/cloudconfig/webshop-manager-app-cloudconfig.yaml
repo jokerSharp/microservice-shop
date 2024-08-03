@@ -37,8 +37,6 @@ spring:
     admin:
       client:
         enabled: false
-  application:
-    name: webshop-manager-app
 webshop:
   services:
     catalogue:

@@ -1,0 +1,10 @@
+server:
+  port: 8182
+spring:
+  application:
+    name: webshop-feedback-service
+  config:
+    import: 'optional:configserver:'
+  cloud:
+    config:
+      uri: http://localhost:8888

@@ -1,0 +1,10 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: webshop-manager-app
+  config:
+    import: 'optional:configserver:'
+  cloud:
+    config:
+      uri: http://localhost:8888

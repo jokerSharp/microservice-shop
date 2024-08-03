@@ -1,3 +1,9 @@
+webshop:
+  services:
+    catalogue:
+      uri: lb://webshop-catalogue-service
+    feedback:
+      uri: lb://webshop-feedback-service
 spring:
   security:
     oauth2:
@@ -7,26 +13,23 @@ spring:
             issuer-uri: http://localhost:8082/realms/webshop
             user-name-attribute: preferred_username
         registration:
-          manager-app:
-            client-id: manager-app
-            client-secret: kKcwseXqBXKHpQC0dSPAeYSnnBRllPNQ
-            provider: keycloak
+          keycloak:
+            client-id: customer-app
+            client-secret: YOlHt0zDJRQkypI0daqIN0p8Kl6K5EqY
             scope:
               - openid
               - view_catalogue
-              - edit_catalogue
-              - microprofile-jwt
           metrics:
             provider: keycloak
-            client-id: manager-app-metrics-client
-            client-secret: sQgXANOQLuCdpvEkMFp6oh0GNoSVVORg
+            client-id: customer-app-metrics-client
+            client-secret: 5o3DqIymzq98yiLNACEiN3UuWuYoQ7jH
             authorization-grant-type: client_credentials
             scope:
               - metrics_server
           discovery:
             provider: keycloak
-            client-id: manager-app-metrics-client
-            client-secret: sQgXANOQLuCdpvEkMFp6oh0GNoSVVORg
+            client-id: customer-app-metrics-client
+            client-secret: 5o3DqIymzq98yiLNACEiN3UuWuYoQ7jH
             authorization-grant-type: client_credentials
             scope:
               - discovery
@@ -37,13 +40,6 @@ spring:
     admin:
       client:
         enabled: false
-  application:
-    name: webshop-manager-app
-webshop:
-  services:
-    catalogue:
-      uri: lb://webshop-catalogue-service
-      registration-id: manager-app
 management:
   health:
     livenessstate:
