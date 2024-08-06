@@ -1,7 +1,7 @@
 spring:
   data:
     mongodb:
-      uri: mongodb://localhost:27017/feedback
+      uri: mongodb://192.168.0.106:27017/feedback
   boot:
     admin:
       client:
@@ -10,7 +10,7 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: http://localhost:8082/realms/webshop
+          issuer-uri: http://192.168.0.106:8082/realms/webshop
       client:
         registration:
           keycloak:
@@ -28,7 +28,7 @@ spring:
               - discovery
         provider:
           keycloak:
-            issuer-uri: http://localhost:8082/realms/webshop
+            issuer-uri: http://192.168.0.106:8082/realms/webshop
 management:
   health:
     livenessstate:
@@ -41,13 +41,13 @@ management:
         include: '*'
   zipkin:
     tracing:
-      endpoint: http://localhost:9411/api/v2/spans
+      endpoint: http://192.168.0.106:9411/api/v2/spans
   tracing:
     sampling:
       probability: 1.0
 eureka:
   client:
     service-url:
-      defaultZone: http://localhost:8761/eureka/
+      defaultZone: http://192.168.0.106:8761/eureka/
   instance:
     prefer-ip-address: true
