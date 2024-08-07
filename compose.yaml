@@ -1,0 +1,16 @@
+name: webshop
+services:
+  config-server:
+    build:
+      dockerfile: Dockerfile
+      args:
+        JAR_FILE: config-server/target/config-server-0.0.1-SNAPSHOT-exec.jar
+      tags:
+        - localhost:5000/webshop/config-server:0.0.1
+    environment:
+      SPRING_PROFILES_ACTIVE: native
+      SPRING_CLOUD_CONFIG_SERVER_NATIVE_SEARCH_LOCATIONS: file:///config/{applications}/{profile}
+    volumes:
+      - './config/cloud:/config'
+    ports:
+      - '18888:8888'
